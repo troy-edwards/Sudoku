@@ -1,0 +1,27 @@
+﻿@page "/"
+
+<PageTitle>Test</PageTitle>
+
+<div class="container">
+
+  @for (int i = 0; i < 9; i++)
+  {
+  <div class="row g-0">
+    @for (int j = 0; j < 9; j++)
+    {
+    <div class="col-1 m-0">
+      <p style="width: 80px; height: 80px; border: black">@RandomSudokuNumber()</p>
+    </div>
+    }
+  </div>
+  }
+</div>
+
+@code {
+Random _random = new Random(DateTime.Now.Millisecond);
+
+int RandomSudokuNumber()
+{
+return _random.Next() % 9 + 1;
+}
+}
