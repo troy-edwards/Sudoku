@@ -1,0 +1,19 @@
+﻿<div class="border border-5 border-black p-0 d-inline-flex">
+  <div>
+    @for (int i = 0; i < Size; i++)
+    {
+      <div class="row g-0">
+        @for (int j = 0; j < Size; j++)
+        {
+          <div class="col-auto">
+            <Block Size="@Size"></Block>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+@code {
+  [Parameter] public int Size { get; set; }
+}

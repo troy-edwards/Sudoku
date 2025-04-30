@@ -1,27 +1,10 @@
 ﻿@page "/"
+@using Sudoku.Components
 
 <PageTitle>Test</PageTitle>
 
-<div class="container">
-
-  @for (int i = 0; i < 9; i++)
-  {
-  <div class="row g-0 m-0">
-    @for (int j = 0; j < 9; j++)
-    {
-    <div class="col-1 m-0">
-      <h2 class="box" style="width: 80px; height: 80px; border: black; border-style: solid">@RandomSudokuNumber()</h2>
-    </div>
-    }
-  </div>
-  }
-</div>
+<SudokuBoard Size="@size"></SudokuBoard>
 
 @code {
-Random _random = new Random(DateTime.Now.Millisecond);
-
-int RandomSudokuNumber()
-{
-return _random.Next() % 9 + 1;
-}
+  readonly int size = 3;
 }
