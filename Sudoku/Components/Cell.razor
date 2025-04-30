@@ -1,5 +1,17 @@
-﻿<h2 class="border border-1 border-black box" style="width: 80px; height: 80px; ">@Value</h2>
+﻿@using Library
+
+<div class="border border-1 border-black box" style="width: 80px; height: 80px; ">
+  @if (Value is null)
+  {
+    <CellPossibilities Location="Location"></CellPossibilities>
+  }
+  else
+  {
+    <h1>@Value</h1>
+  }
+</div>
 
 @code {
   [Parameter] public int? Value { get; set; }
+  [Parameter] public Location Location { get; set; }
 }

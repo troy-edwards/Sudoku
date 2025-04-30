@@ -2,9 +2,18 @@
 @using Sudoku.Components
 
 <PageTitle>Test</PageTitle>
-
-<SudokuBoard Size="@size"></SudokuBoard>
+<div class="container">
+  <div class="row">
+    <div class="col-auto">
+      <SudokuBoard Size="3"></SudokuBoard>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary">Solve</button>
+      <button class="btn btn-danger">Reset</button>
+    </div>
+  </div>
+</div>
 
 @code {
-  readonly int size = 3;
+
 }

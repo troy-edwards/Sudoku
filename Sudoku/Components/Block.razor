@@ -1,11 +1,12 @@
-﻿<div class="border border-2 border-black m-0">
-  @for (int i = 0; i < Size; i++)
-  {
+﻿@using Library
+<div class="border border-2 border-black m-0">
+  @for (int cellRow = 0; cellRow < Size; cellRow++)
+  { 
     <div class="row g-0">
-      @for (int j = 0; j < Size; j++)
+      @for (int cellColumn = 0; cellColumn < Size; cellColumn++)
       {
         <div class="col-auto">
-          <Cell Value="@RandomSudokuNumber()"></Cell>
+          <Cell Value="@RandomSudokuNumber()" Location="@(Location.GetChildLocation(cellRow, cellColumn, Size))"></Cell>
         </div>
       }
     </div>
@@ -14,12 +15,14 @@
 
 @code {
   [Parameter] public int Size { get; set; } = 3;
+  [Parameter] public Location Location { get; set; }
 
   Random _random = new Random(DateTime.Now.Millisecond);
 
-  int RandomSudokuNumber()
+  int? RandomSudokuNumber()
   {
-    return _random.Next() % 9 + 1;
+    int val = _random.Next() % 25+ 1;
+    return val > 9 ? null : val;
   }
 
 }
