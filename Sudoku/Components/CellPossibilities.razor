@@ -1,0 +1,17 @@
+﻿@using Library
+@inject GameState _GameState;
+
+@foreach (var row in CellHelpers.GetPossibilitiesDisplay(_allOptions, Possibilities, _blockSize))
+{
+  <pre class="small p-0 m-0">@row</pre>
+}
+
+@code {
+  [Parameter] public Location Location { get; set; }
+  HashSet<int> Possibilities => _GameState.CurrentBoard.GetPossibilitiesAt(Location);
+  HashSet<int> _allOptions => _GameState.CurrentBoard.AllPossibilities;
+  int _blockSize = 3;
+  
+
+}
+

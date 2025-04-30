@@ -1,5 +1,59 @@
-﻿<h2 class="border border-1 border-black box" style="width: 80px; height: 80px; ">@Value</h2>
+﻿@using System.ComponentModel
+@using Library
+@inject GameState _GameState;
+@inject Settings _Settings;
+
+<div class="border @BorderValue() box" style="width: 80px; height: 80px;" @onclick="SetAsClicked">
+  @if (Value is null)
+  {
+    @if (_Settings.ShowPossibilities)
+    {
+      <CellPossibilities Location="Location"></CellPossibilities>
+    }
+  }
+  else
+  {
+    <h1>@Value</h1>
+  }
+</div>
 
 @code {
-  [Parameter] public int? Value { get; set; }
+  
+  string BorderValue()
+  {
+    return _GameState.SelectedLocation.Equals(Location) ? "border-4 border-primary" : "border-1 border-black";
+  }
+  
+  int? Value => _GameState.CurrentBoard.GetValueAt(Location);
+  [Parameter] public Location Location { get; set; }
+
+  void SetAsClicked()
+  {
+    _GameState.SelectedLocation = Location;
+    _GameState.SelectionChanged += OnSelectionChanged;
+    StateHasChanged();
+  }
+
+  void OnSelectionChanged()
+  {
+    if (!_GameState.SelectedLocation.Equals(Location))
+    {
+      _GameState.SelectionChanged -= OnSelectionChanged;
+      StateHasChanged();
+    }
+  }
+
+
+  protected override void OnInitialized()
+  {
+    _Settings.PossibilitiesChanged += StateHasChanged;
+    _GameState.PropertyChanged += OnStatePropertyChanged;
+    _GameState.CurrentBoard.PropertyChanged += OnStatePropertyChanged;
+  }
+
+  private void OnStatePropertyChanged(object? sender, PropertyChangedEventArgs e)
+  {
+    StateHasChanged();
+  }
+
 }

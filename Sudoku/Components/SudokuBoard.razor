@@ -1,4 +1,5 @@
-﻿<div class="border border-5 border-black p-0 d-inline-flex">
+﻿@using Library
+<div class="border border-5 border-black p-0 d-inline-flex">
   <div>
     @for (int i = 0; i < Size; i++)
     {
@@ -6,7 +7,7 @@
         @for (int j = 0; j < Size; j++)
         {
           <div class="col-auto">
-            <Block Size="@Size"></Block>
+            <Block Size="@Size" Location="@(new Location(i, j))"></Block>
           </div>
         }
       </div>

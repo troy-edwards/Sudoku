@@ -1,10 +1,26 @@
 ﻿@page "/"
+@using Library
 @using Sudoku.Components
+@inject GameState _GameState;
+@inject Settings _Settings;
 
 <PageTitle>Test</PageTitle>
-
-<SudokuBoard Size="@size"></SudokuBoard>
+<div class="container">
+  <div class="row">
+    <div class="col-auto">
+      <SudokuBoard Size="Size"></SudokuBoard>
+    </div>
+    <div class="col">
+      <button class="btn btn-primary">Solve</button>
+      <button class="btn btn-danger">Reset</button>
+      <br/>
+      <label for="show-possibilities">Show Possibilities:</label>
+      <input id="show-possibilities" type="checkbox" @bind="_Settings.ShowPossibilities"/>
+      <KeyPad></KeyPad>
+    </div>
+  </div>
+</div>
 
 @code {
-  readonly int size = 3;
+  int Size => (int)Math.Sqrt(_GameState.CurrentBoard.Size);
 }

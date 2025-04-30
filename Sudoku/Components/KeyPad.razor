@@ -1,0 +1,22 @@
+﻿@using Library;
+@inject GameState _GameState;
+
+<div class="container">
+  @for (int row = 0; row < SquareSize; row++)
+  {
+    <div class="row g-0">
+      @for (int column = 0; column < SquareSize; column++)
+      {
+        <div class="col-auto">
+          <KeypadButton Value="Values[row * SquareSize + column]"></KeypadButton>
+        </div>
+      }
+    </div>
+  }
+</div>
+
+
+@code {
+  int SquareSize => (int)Math.Sqrt(_GameState.CurrentBoard.Size);
+  List<int> Values => _GameState.CurrentBoard.AllPossibilities.ToList();
+}

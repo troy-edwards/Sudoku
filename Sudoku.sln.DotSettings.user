@@ -1,0 +1,9 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cd21b138_002De0b2_002D4821_002D8157_002Ddb160c296f72/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="AllCellsStartAsNull" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.SudokuGridTests.AllCellsStartAsNull&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetChildLocationTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.CellHelperTests.GetPossibilitiesDisplayGivesRows&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetParentBlockTest&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
