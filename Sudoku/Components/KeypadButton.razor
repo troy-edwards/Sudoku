@@ -1,11 +1,16 @@
 ﻿@using Library
 @inject GameState _GameState;
 
-<button class="btn btn-secondary m-1" @onclick="ButtonPressed">@Value</button>
+<button class="btn btn-secondary m-1" @onclick="ButtonPressed">@DisplayValue()</button>
 
 @code {
-  [Parameter] public int Value { get; set; }
+  [Parameter] public int? Value { get; set; }
 
+  string DisplayValue()
+  {
+    return Value is null ? "Clear" : Value.Value.ToString();
+  }
+  
   void ButtonPressed()
   {
     var selectedCell = _GameState.SelectedLocation;

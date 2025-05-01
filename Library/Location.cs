@@ -49,4 +49,53 @@ public struct Location
     {
         return new Location(Row / parentSize, Column/parentSize);
     }
+
+    public HashSet<Location> GetOtherLocationsInSameRow(int gridSize)
+    {
+        HashSet<Location> others = new HashSet<Location>();
+        for (int col = 0; col < gridSize; col++)
+        {
+            if(col != Column)
+                others.Add(new Location(Row, col));
+        }
+
+        return others;
+    }
+
+    public HashSet<Location> GetOtherLocationsInSameColumn(int gridSize)
+    {
+        HashSet<Location> others = new HashSet<Location>();
+        for (int row = 0; row < gridSize; row++)
+        {
+            if(row != Row)
+                others.Add(new Location(row, Column));
+        }
+
+        return others;
+    }
+
+    public HashSet<Location> GetOtherLocationsInSameBlock(int gridSize)
+    {
+        int blockSize = (int)MathF.Sqrt(gridSize);
+        HashSet<Location> locations = new HashSet<Location>();
+        Location topLeft = GetParentBlock(blockSize).GetChildLocation(new Location(0, 0), blockSize);
+        for (int row = topLeft.Row; row < topLeft.Row + blockSize; row++)
+        {
+            for (int col = topLeft.Column; col < topLeft.Column + blockSize; col++)
+            {
+                locations.Add(new Location(row, col));
+            }
+        }
+
+        locations.Remove(this);
+        return locations;
+    }
+
+    public HashSet<Location> GetAssociatedLocations(int gridSize)
+    {
+        var combinedSet = GetOtherLocationsInSameBlock(gridSize);
+        combinedSet.UnionWith(GetOtherLocationsInSameColumn(gridSize));
+        combinedSet.UnionWith(GetOtherLocationsInSameRow(gridSize));
+        return combinedSet;
+    }
 }

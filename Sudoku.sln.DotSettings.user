@@ -5,5 +5,11 @@
     &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetChildLocationTest&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.CellHelperTests.GetPossibilitiesDisplayGivesRows&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetParentBlockTest&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetLocationsInSameRowReturnsAllInRowButSelf&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetLocationsInSameColumnReturnsAllInRowButSelf&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetLocationsInSameBlockReturnsAllInBlockButSelf&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.LocationTests.GetAffectedLocationsGivesAllOthersInRowColumnAndBlock&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.SudokuGridTests.GridStartsWith9OptionsInAllCellsForSize9&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::DDC53B63-F703-426C-8196-AF0C2C931135::net8.0::Sudoku.Tests.SudokuGridTests.AddingAnOptionToGridRemovesThatNumberAsPossibilityFromAllAssociatedCells&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
