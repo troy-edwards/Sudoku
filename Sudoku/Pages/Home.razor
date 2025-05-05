@@ -3,6 +3,7 @@
 @using Sudoku.Components
 @inject GameState _GameState;
 @inject Settings _Settings;
+@inject HttpClient _HttpClient;
 
 <PageTitle>Test</PageTitle>
 <div class="container">
@@ -11,8 +12,12 @@
       <SudokuBoard Size="Size"></SudokuBoard>
     </div>
     <div class="col">
-      <button class="btn btn-primary">Solve</button>
-      <button class="btn btn-danger">Reset</button>
+      <button class="btn btn-secondary" onclick="@(() => GetNewBoard("Easy"))">@(_retrivingPuzzle ? "Loading..." : "New Easy")</button>
+      <button class="btn btn-secondary" onclick="@(() => GetNewBoard("Medium"))">New Medium</button>
+      <button class="btn btn-secondary" onclick="@(() => GetNewBoard("Hard"))">New Hard</button>
+      <br/>
+      <button class="btn btn-primary" @onclick="SolveSimple">Solve Simple</button>
+      <button class="btn btn-danger" @onclick="ClearBoard">Reset</button>
       <br/>
       <label for="show-possibilities">Show Possibilities:</label>
       <input id="show-possibilities" type="checkbox" @bind="_Settings.ShowPossibilities"/>
@@ -23,4 +28,43 @@
 
 @code {
   int Size => (int)Math.Sqrt(_GameState.CurrentBoard.Size);
+
+  bool _retrivingPuzzle = false;
+  
+  void ClearBoard()
+  {
+    _GameState.CurrentBoard.ClearBoard();
+  }
+
+  void SolveSimple()
+  {
+    _GameState.CurrentBoard.SimpleSolve();
+    _GameState.CurrentBoard.OnPropertyChanged();
+  }
+  
+  async Task GetNewBoard(string difficulty)
+  {
+    Grid? board = null;
+    _retrivingPuzzle = true;
+    while (board is null)
+    {
+      BoardFromApi? response = await _HttpClient.GetFromJsonAsync<BoardFromApi>("https://sudoku-api.vercel.app/api/dosuku?query={newboard(limit:2){grids{value,solution,difficulty},results,message}}" );
+      board = response?.Newboard.Grids.FirstOrDefault(b => b.Difficulty == difficulty);
+    }
+
+    var newBoardLists = board.Value;
+    var currentBoard = _GameState.CurrentBoard;
+    for (int row = 0; row < 9; row++)
+    {
+      for (int col = 0; col < 9; col++)
+      {
+        int newListValue = newBoardLists[row][col];
+        int? newVal = newListValue == 0 ? null : newListValue;
+        currentBoard.SetValueAt(row, col, newVal);
+      }
+    }
+
+    _retrivingPuzzle = false;
+    _GameState.OnPropertyChanged();
+  }
 }

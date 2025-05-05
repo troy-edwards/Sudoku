@@ -9,7 +9,7 @@ public class SudokuGrid : INotifyPropertyChanged
     private readonly int?[,] _cellValues;
     private readonly HashSet<int>[,] _cellPossibilities;
     public int Size { get; }
-
+    
     public SudokuGrid(int size, HashSet<int> allPossibilities)
     {
         Size = size;
@@ -35,34 +35,61 @@ public class SudokuGrid : INotifyPropertyChanged
 
     public void SetValueAt(int row, int column, int? value)
     {
-        SetField(ref _cellValues[row, column], value, UpdateAllPossibilities);
+        _cellValues[row, column] = value;
+        UpdateAllPossibilities();
     }
-
 
     public void SetValueAt(Location location, int? value)
     {
         SetValueAt(location.Row, location.Column, value);
     }
-    public void UpdateAllPossibilities()
+
+    public void SetValueAtAndNotify(Location location, int? newValue)
     {
+        SetValueAt(location, newValue);
+        OnPropertyChanged();
+    }
+
+    public List<Location> GetAllLocations()
+    {
+        List<Location> locations = new List<Location>();
         for (int row = 0; row < Size; row++)
         {
             for (int col = 0; col < Size; col++)
             {
-                Location location = new Location(row, col);
-                if (_cellValues[row, col] is not null)
-                {
-                    _cellPossibilities[row,col].Clear();
-                }
-                else
-                {
-                    UpdatePossibilitiesAt(location);
-                }
+                locations.Add(new Location(row, col));
+            }
+        }
+        return locations;
+    }
+
+    public void ClearBoard()
+    {
+        var locations = GetAllLocations();
+        foreach (var location in locations)
+        {
+            SetValueAt(location, null);
+        }
+        UpdateAllPossibilities();
+        OnPropertyChanged();
+    }
+    
+    public void UpdateAllPossibilities()
+    {
+        foreach (var location in GetAllLocations())
+        {
+            if (_cellValues[location.Row, location.Column] is not null)
+            {
+                _cellPossibilities[location.Row,location.Column].Clear();
+            }
+            else
+            {
+                UpdatePossibilitiesAt(location);
             }
         }
     }
 
-    public void UpdatePossibilitiesAt(Location location)
+    private void UpdatePossibilitiesAt(Location location)
     {
         var associatedLocations = location.GetAssociatedLocations(Size);
         var newPossibilities = new HashSet<int>(AllPossibilities);
@@ -84,17 +111,44 @@ public class SudokuGrid : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected bool SetField<T>(ref T field, T value, Action? workBeforeEvent = null)
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string? propertyName = null)
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         field = value;
-        workBeforeEvent?.Invoke();
-        OnPropertyChanged(null);
+        OnPropertyChanged(propertyName);
         return true;
     }
+
+    public bool FillInCellsWithOneOption()
+    {
+        bool somethignChanged = false;
+        foreach (var location in GetAllLocations())
+        {
+            if (GetValueAt(location) is not null) continue;
+            var possibilities = GetPossibilitiesAt(location);
+            if (possibilities.Count == 1)
+            {
+                SetValueAt(location, possibilities.First());
+                somethignChanged = true;
+            }
+        }
+        UpdateAllPossibilities();
+        return somethignChanged;
+    }
+
+    public void SimpleSolve()
+    {
+        bool somethingChanged;
+        do
+        {
+            somethingChanged = FillInCellsWithOneOption();
+        } while (somethingChanged);
+    }
+    
+    
 }

@@ -30,19 +30,18 @@
   void SetAsClicked()
   {
     _GameState.SelectedLocation = Location;
-    _GameState.SelectionChanged += OnSelectionChanged;
+    _GameState.PropertyChanged += OnSelectionChanged;
     StateHasChanged();
   }
 
-  void OnSelectionChanged()
+  private void OnSelectionChanged(object? sender, PropertyChangedEventArgs e)
   {
     if (!_GameState.SelectedLocation.Equals(Location))
     {
-      _GameState.SelectionChanged -= OnSelectionChanged;
+      _GameState.PropertyChanged -= OnSelectionChanged;
       StateHasChanged();
     }
   }
-
 
   protected override void OnInitialized()
   {

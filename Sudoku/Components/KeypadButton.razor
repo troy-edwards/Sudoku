@@ -16,6 +16,6 @@
     var selectedCell = _GameState.SelectedLocation;
     if (selectedCell is null)
       return;
-    _GameState.CurrentBoard.SetValueAt(selectedCell.Value, Value);
+    _GameState.CurrentBoard.SetValueAtAndNotify(selectedCell.Value, Value);
   }
 }

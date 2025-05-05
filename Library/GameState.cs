@@ -13,26 +13,21 @@ public class GameState : INotifyPropertyChanged
         set
         {
             SetField(ref _selectedLocation, value);
-            OnSelectionChanged();
+            OnPropertyChanged();
             
         }
     }
 
-    public event Action SelectionChanged;
     public GameState(int size = 9, HashSet<int>? possibilities = null)
     {
         possibilities ??= [1, 2, 3, 4, 5, 6, 7, 8, 9];
         CurrentBoard = new SudokuGrid(size, possibilities);
     }
 
-    protected virtual void OnSelectionChanged()
-    {
-        SelectionChanged?.Invoke();
-    }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
